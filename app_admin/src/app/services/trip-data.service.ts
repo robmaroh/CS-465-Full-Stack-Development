@@ -1,18 +1,19 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable, Inject } from '@angular/core';
+import { Http } from '@angular/http';
 
 import { Trip } from '../models/trip';
+import { User } from '../models/user';
+import { Authresponse } from '../models/authresponse';
+import { BROWSER_STORAGE } from '../storage';
 
-
-@Injectable({
-  providedIn: 'root'
-})
-
+@Injectable()
 export class TripDataService {
 
-  constructor(private http: HttpClient) {}
-  url = 'http://localhost:3000/api/trips';
+  constructor(private http: Http,
+    @Inject(BROWSER_STORAGE) private storage: Storage) { }
+  
+  private apiBaseUrl = 'http://localhost:3000/api/';
+  private tripUrl = `${this.apiBaseUrl}trips/`;
 
   getTrips() : Observable<Trip[]> {
     // console.log('Inside TripDataService::getTrips');
@@ -33,4 +34,23 @@ export class TripDataService {
     // console.log('Inside TripDataService::addTrips');
     return this.http.put<Trip>(this.url + '/' + formData.code, formData);
   }
+
+  public login(user: User): Promise<Authresponse> {
+    return this.makeAuthApiCall('login', user);
+  }
+
+  public register(user: User): Promise<Authresponse> {
+    return this.makeAuthApiCall('register', user);
+  }
+
+  private makeAuthApiCall(urlPath: string, user: User): Promise<Authresponse> {
+    const url: string = `${this.apiBaseUrl}/${urlPath}`;
+    return this.http
+      .post(url, user)
+      .toPromise()
+      .then(response => response.json() as Authresponse)
+      .catch(this.handleError);
+  }
+
 }
+
