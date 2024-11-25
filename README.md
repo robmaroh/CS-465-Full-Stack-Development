@@ -1,7 +1,6 @@
-# CS-465-Full-Stack-Development
-CS-465 Full Stack Development with MEAN
+# Full Stack Development with MEAN
 
-In this course we developed a Full Stack application using a MongoDB, Express, Angular, and Node.js (MEAN) stack. 
+I developed a Full Stack application using a MongoDB, Express, Angular, and Node.js (MEAN) stack. 
 
 # Architecture
 For the front-end development, it was all based on Express HTML, JavaScript, and a single-page application (SPA) to handle the dynamic aspects of the webpage. The frontend was created from HTML and JavaScript. JavaScript was used for managing website routes, controllers, and models. The main application file was used to route the Express application requests. Express HTML was written using handlebar views and HTML pages. A SPA was employed for administrative functions to manage website maintenance and updates.
